@@ -1,0 +1,7 @@
+---
+Name: servicefindertoolextensions
+---
+
+SilverStripe\CMS\Controllers\ContentController:
+  extensions:
+    - SomarDesignStudios\ServiceFinderTool\ControllerExtension
