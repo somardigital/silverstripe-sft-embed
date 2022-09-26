@@ -19,32 +19,21 @@ class ControllerExtension extends Extension
      * @var bool
      * @config
      */
-    private static $enabled = true;
-
-    /**
-     * @var bool
-     * @config
-     */
     private static $use_remote_js = false;
 
-    public function onBeforeInit()
-    {
-        if (Config::inst()->get(self::class, 'enabled')) {
-            $this->requireCoreJS();
-        }
-    }
-
     /**
-     * Outputs the trigger class that the SFT embed code binds to.
+     * Outputs the trigger class that the SFT embed code binds to. Automatically ensures the JS is included on the page.
      *
      * @return string
      */
     public function getServiceFinderToolTrigger()
     {
+        self::requireCoreJS();
+
         return 'js-service-finder-tool-trigger';
     }
 
-    protected function requireCoreJS()
+    public static function requireCoreJS()
     {
         if (Config::inst()->get(self::class, 'use_remote_js')) {
             # TODO: Production URL

@@ -2,26 +2,22 @@
 
 This module facilitates the inclusion of the [Service Finder Tool](https://service-finder-tool.cloudfront.net) in a Silverstripe website.
 
-# Installation
-
-Include the module code with `composer require somardesignstudios/silverstripe-sft-embed` and enable it via config:
-
-```yml
-SomarDesignStudios\ServiceFinderTool\ControllerExtension:
-  enabled: true
-```
-
 # Usage
 
-After enabling the plugin in config, the `ServiceFinderTool\ControllerExtension` will inject the necessary Javascript into your pages.
+Include the module code with `composer require somardesignstudios/silverstripe-sft-embed`.
 
-You can then bind buttons to the Service Finder Tool by adding the default trigger class (`.js-service-finder-tool-trigger`) to relevant elements:
+You can then bind buttons to the Service Finder Tool by adding the default trigger class (`.js-service-finder-tool-trigger`) to relevant elements via the template helper `$ServiceFinderToolTrigger`:
 
 ```html
 <button class="$ServiceFinderToolTrigger">Open Service Finder Tool</button>
 ```
 
-If you want to attach the trigger to an element manually (for example, if the target element does not exist in the DOM during page load), you can manually attach the open listeners to an element by calling `window.initServiceFinderTool('element-css-selector')`.
+The `ServiceFinderTool\ControllerExtension` will inject the necessary Javascript into the page when the trigger is used.
+
+If you want to attach the trigger to an element manually (for example, if the target element does not exist in the DOM during page load):
+
+- Call `ServiceFinderTool\ControllerExtension::requireCoreJS()` from your controller to inject the necessary Javascript
+- Bind the tool to a button element by calling `window.initServiceFinderTool('<element-css-selector>')`
 
 If you need to open the tool from your own Javascript, you can call `window.triggerServiceFinderTool()` directly, and you can close it by calling `window.closeServiceFinderTool()`.
 
