@@ -12,7 +12,7 @@ You can then bind buttons to the Service Finder Tool by adding the default trigg
 <button class="$ServiceFinderToolTrigger">Open Service Finder Tool</button>
 ```
 
-The `ServiceFinderTool\ControllerExtension` will inject the necessary Javascript into the page when the trigger is used.
+The `ServiceFinderTool\ControllerExtension` will inject the necessary Javascript into the page when the trigger is used. This will not work correctly if the element is wrapped in partial caching, in which case you will need to follow the steps below to trigger the injection manually.
 
 If you want to attach the trigger to an element manually (for example, if the target element does not exist in the DOM during page load):
 
