@@ -36,8 +36,7 @@ class ControllerExtension extends Extension
     public static function requireCoreJS()
     {
         if (Config::inst()->get(self::class, 'use_remote_js')) {
-            # TODO: Production URL
-             Requirements::javascript('https://service-finder-tool.cloudfront.net/js/embed.js');
+             Requirements::javascript('https://d2mr1k8kix77a1.cloudfront.net/js/embed.js');
         } else {
             Requirements::javascript('somardesignstudios/silverstripe-sft-embed: javascript/embed.js');
         }
