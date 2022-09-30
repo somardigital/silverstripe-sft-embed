@@ -22,6 +22,24 @@ class ControllerExtension extends Extension
     private static $use_remote_js = false;
 
     /**
+     * If enabled then the JavaScript will be loaded on all pages
+     * @config
+     */
+    private static bool $always_load_script = false;
+
+    /**
+     * @inheritDoc
+     */
+    public function onAfterInit()
+    {
+        // load the service finder tool for every page
+        // this is helpful if the tool is included in a cached block
+        if (Config::inst()->get(self::class, 'always_load_script')) {
+            $this->requireCoreJS();
+        }
+    }
+
+    /**
      * Outputs the trigger class that the SFT embed code binds to. Automatically ensures the JS is included on the page.
      *
      * @return string
