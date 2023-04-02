@@ -1,6 +1,6 @@
 # MSD Service Finder Tool Embed
 
-This module facilitates the inclusion of the [Service Finder Tool](https://d2mr1k8kix77a1.cloudfront.net) in a Silverstripe website.
+This module facilitates the inclusion of the [Service Finder Tool](https://sft.org.nz) in a Silverstripe website.
 
 # Usage
 
