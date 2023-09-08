@@ -39,7 +39,7 @@ If you want to attach the trigger to an element manually (for example, if the ta
 - Call `SomarDesignStudios\ServiceFinderTool\ControllerExtension::requireCoreJS()` from your controller to inject the necessary Javascript
 - Bind the tool to a button element by calling `window.initServiceFinderTool('<element-css-selector>')`
 
-If you need to open the tool from your own Javascript, you can call `window.triggerServiceFinderTool()` directly, and you can close it by calling `window.closeServiceFinderTool()`.
+If you need to open the tool from your own Javascript, you can call `window.openServiceFinderTool()` directly, and you can close it by calling `window.closeServiceFinderTool()`.
 
 
 
