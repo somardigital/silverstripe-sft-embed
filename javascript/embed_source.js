@@ -2,7 +2,9 @@
     const serviceFinderToolTitle = "Home - Service Finder";
     const serviceFinderToolUrl = "https://d2mr1k8kix77a1.cloudfront.net/";
     const wrapperElementId = "service-finder-tool";
+    const resizeThrottle = 125; // millisecond
     let openTriggerElement;
+    let resizeTimeout;
 
     (window.openServiceFinderTool = (openEvent) => {
         if (openEvent) {
@@ -38,12 +40,15 @@
         const frameElement = document.createElement('iframe');
         frameElement.setAttribute('src', serviceFinderToolUrl);
         frameElement.setAttribute('title', serviceFinderToolTitle);
+        frameElement.setAttribute('id', 'sft-embedded');
         frameElement.style.border = 'none';
-        frameElement.style.width = '90%';
+
+        const widthAndLeft = window.getEmbeddedWidthAndLeftByBrowserWidth(window.innerWidth);
+        frameElement.style.width = widthAndLeft.widthExpression;
         frameElement.style.height = '90%';
         frameElement.style.position = 'absolute';
         frameElement.style.top = '5%';
-        frameElement.style.left = '5%';
+        frameElement.style.left = widthAndLeft.leftExpression;
 
         overlayElement.addEventListener('click', window.closeServiceFinderTool);
         wrapperElement.addEventListener('keydown', (e) => {
@@ -59,6 +64,32 @@
         document.querySelector('body').style.overflow = 'hidden';
 
         wrapperElement.focus();
+    }),
+
+    // As per design by Dentsu, the iframe popup of the tool should have different width by different browser width:
+    // when browser is less than or equal to 700px, the popup should be full-width
+    // when browser is less than or equal to 1024px but more than 700px, the popup has a fixed width of 700px
+    // when browser is less than or equal to 1800px  but more than 1024px, the popup has a fixed padding 32px on each side
+    // when browser is more than 1800px, the popup has fixed width of 1700px
+    (window.getEmbeddedWidthAndLeftByBrowserWidth = (browserWidth) => {
+        let widthExpression;
+        let leftExpression;
+
+        if (browserWidth > 1800) {
+            widthExpression = '1700px';
+            leftExpression = `${(50 * (browserWidth - 1700)) / browserWidth}%`;
+        } else if (browserWidth > 1024) {
+            widthExpression = `calc(100% - 64px)`;
+            leftExpression = '32px';
+        } else if (browserWidth > 700) {
+            widthExpression = '700px';
+            leftExpression = `${(50 * (browserWidth - 700)) / browserWidth}%`;
+        } else {
+            widthExpression = '100%';
+            leftExpression = 0;
+        }
+
+        return { widthExpression, leftExpression };
     }),
 
     (window.closeServiceFinderTool = () => {
@@ -92,6 +123,23 @@
     document.addEventListener("DOMContentLoaded", () => {
         window.initServiceFinderTool();
     }),
+
+    (window.adjustIFramePopupWidthAndPosition = () => {
+        clearTimeout(resizeTimeout);
+
+        resizeTimeout = setTimeout(() => {
+            const frameElement = document.getElementById('sft-embedded');
+
+            if (frameElement) {
+                const widthAndLeft = window.getEmbeddedWidthAndLeftByBrowserWidth(window.innerWidth);
+
+                frameElement.style.width = widthAndLeft.widthExpression;
+                frameElement.style.left = widthAndLeft.leftExpression;
+            }
+        }, resizeThrottle);
+    }),
+
+    window.addEventListener('resize', window.adjustIFramePopupWidthAndPosition, false);
 
     window.addEventListener("message", (event) => {
         if (event.data === 'closeServiceFinderTool') {
