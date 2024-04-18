@@ -2,6 +2,14 @@
 
 This module facilitates the inclusion of the [Service Finder Tool](https://sft.org.nz) in a Silverstripe website.
 
+
+# About minified js file and its source code
+In order to make updating the embed javascript doable, a source code file embed_source.js is added to the code repo, and
+the embed.js file is re-minified and compressed by online JS minify tool from
+https://www.toptal.com/developers/javascript-minifier.
+
+The embed.js is then fully tested and behave as exactly as before.
+
 # Usage
 
 Include the module code with `composer require somardesignstudios/silverstripe-sft-embed`.
@@ -39,7 +47,7 @@ If you want to attach the trigger to an element manually (for example, if the ta
 - Call `SomarDesignStudios\ServiceFinderTool\ControllerExtension::requireCoreJS()` from your controller to inject the necessary Javascript
 - Bind the tool to a button element by calling `window.initServiceFinderTool('<element-css-selector>')`
 
-If you need to open the tool from your own Javascript, you can call `window.triggerServiceFinderTool()` directly, and you can close it by calling `window.closeServiceFinderTool()`.
+If you need to open the tool from your own Javascript, you can call `window.openServiceFinderTool()` directly, and you can close it by calling `window.closeServiceFinderTool()`.
 
 
 
