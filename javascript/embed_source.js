@@ -1,6 +1,6 @@
 (function() {
     const serviceFinderToolTitle = 'Home - Service Finder';
-    const serviceFinderToolUrl = process.env.VUE_APP_EMBED_IFRAME_URL || 'https://sft.org.nz/';
+    const serviceFinderToolUrl = 'https://sft.org.nz/';
     const wrapperElementId = 'service-finder-tool';
     let openTriggerElement;
     let resizeTimeout;
